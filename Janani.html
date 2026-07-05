@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Janani ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:'Poppins',sans-serif;
+background:linear-gradient(135deg,#ffe5ec,#ffc2d1,#ffb3c6);
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+overflow:hidden;
+position:relative;
+}
+
+.card{
+width:90%;
+max-width:650px;
+background:rgba(255,255,255,.9);
+padding:30px;
+border-radius:20px;
+text-align:center;
+box-shadow:0 0 25px rgba(0,0,0,.2);
+z-index:10;
+}
+
+h1{
+font-family:'Dancing Script',cursive;
+font-size:55px;
+color:#ff2d75;
+margin-bottom:15px;
+}
+
+h2{
+color:#ff2d75;
+margin-bottom:20px;
+}
+
+.question{
+font-size:22px;
+font-weight:bold;
+margin-bottom:20px;
+}
+
+.options button{
+width:100%;
+padding:15px;
+margin:10px 0;
+font-size:18px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+background:white;
+border:2px solid #ff2d75;
+transition:.3s;
+}
+
+.progress{
+    width:100%;
+    height:12px;
+    background:#f0f0f0;
+    border-radius:10px;
+    overflow:hidden;
+    margin-bottom:15px;
+}
+
+#progressBar{
+    width:0%;
+    height:100%;
+    background:#ff2d75;
+    transition:0.5s;
+}
+
+#progressText{
+    margin-bottom:15px;
+    font-weight:bold;
+    color:#ff2d75;
+}
+
+.options button:hover{
+background:#ff2d75;
+color:white;
+}
+
+#wishes{
+display:none;
+}
+
+.photo{
+width:260px;
+height:320px;
+margin:20px auto;
+border-radius:20px;
+overflow:hidden;
+box-shadow:0 0 20px rgba(0,0,0,.3);
+}
+
+.photo img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.message{
+font-size:18px;
+line-height:1.8;
+color:#555;
+}
+
+.heart{
+font-size:60px;
+animation:beat 1s infinite;
+margin-top:20px;
+}
+
+@keyframes beat{
+50%{
+transform:scale(1.2);
+}
+}
+
+.confetti{
+position:absolute;
+top:-20px;
+width:10px;
+height:10px;
+border-radius:50%;
+animation:fall linear forwards;
+}
+
+@keyframes fall{
+100%{
+transform:translateY(110vh) rotate(720deg);
+}
+}
+
+.floatHeart{
+position:absolute;
+bottom:-50px;
+font-size:30px;
+animation:fly linear forwards;
+}
+
+@keyframes fly{
+100%{
+transform:translateY(-120vh);
+opacity:0;
+}
+}
+</style>
+
+</head>
+<body>
+
+<audio id="music" loop>
+<source src="song.mp3" type="audio/mpeg">
+</audio>
+
+<div class="card">
+
+<div id="quiz">
+
+<h2>❤️ How Well Do You Know Us ❤️</h2>
+<div class="progress">
+    <div id="progressBar"></div>
+</div>
+<p id="progressText">0%</p>
+
+<p id="question" class="question"></p>
+
+<div id="options" class="options"></div>
+
+</div>
+
+<div id="wishes">
+
+<h1>Happy Birthday Janani ❤️</h1>
+
+<div class="photo">
+<img src="janani.jpeg" alt="Janani">
+</div>
+
+<p class="message">
+
+My Dearest Janani ❤️
+
+<br><br>
+
+Happy Birthday to the most beautiful and caring person in my life.
+
+You make every day brighter with your smile.
+
+Thank you for filling my life with love and happiness.
+
+I wish you endless joy, success, good health and all the love in the world.
+
+I promise to stand beside you today, tomorrow and forever.
+
+Happy Birthday My Love ❤️🎂
+
+</p>
+
+<div class="heart">❤️</div>
+
+</div>
+
+</div>
+
+<script>
+
+const music=document.getElementById("music");
+
+const quiz = [
+
+{
+q: "❤️ Where is my favourite place?",
+o: [
+"🏠 Home",
+"❤️ With You",
+"🏖️ Beach",
+"🏢 Office"
+]
+},
+
+{
+
+q: "🥰 How many years have we been in love?",
+o: [
+"❤️ 2 Years",
+"💖 3 Years",
+"💕 4 Years",
+"💘 Forever"
+]
+
+},
+
+{
+q: "💕 What makes me smile the most?",
+o: [
+"💰 Money",
+"📱 Mobile Phone",
+"❤️ Your Smile",
+"🎮 Games"
+]
+},
+
+{
+q: "💖 On which date did I first propose to you?",
+o: [
+"❤️ 12/12",
+"🌹 12/10",
+"💕 11/12",
+"💘 10/12"
+]
+},
+
+{
+q: "💖 Last date of meeting with you means ?",
+o: [
+"❤️ 21/02",
+"🌹 12/10",
+"💕 21/06",
+"💘 10/01"
+]
+}
+
+];
+
+function updateProgress() {
+    let percent = Math.round((current / quiz.length) * 100);
+    document.getElementById("progressBar").style.width = percent + "%";
+    document.getElementById("progressText").innerHTML = percent + "% Completed";
+}
+
+let current=0;
+
+
+function loadQuestion(){
+
+    updateProgress();
+
+    document.getElementById("question").innerHTML = quiz[current].q;
+
+    let options = document.getElementById("options");
+    options.innerHTML = "";
+
+    quiz[current].o.forEach(answer => {
+
+        let button = document.createElement("button");
+
+        button.innerHTML = answer;
+
+        button.onclick = nextQuestion;
+
+        options.appendChild(button);
+
+    });
+
+}
+
+
+document.getElementById("question").innerHTML=quiz[current].q;
+
+let options=document.getElementById("options");
+
+options.innerHTML="";
+
+quiz[current].o.forEach(answer=>{
+
+let button=document.createElement("button");
+
+button.innerHTML=answer;
+
+button.onclick=nextQuestion;
+
+options.appendChild(button);
+
+});
+
+
+function nextQuestion(){
+
+current++;
+
+if(current<quiz.length){
+
+loadQuestion();
+
+}
+else{
+
+document.getElementById("quiz").style.display="none";
+
+document.getElementById("wishes").style.display="block";
+
+music.currentTime=0;
+
+music.play().catch(function(e){
+console.log(e);
+});
+
+confetti();
+
+floatingHearts();
+
+}
+
+}
+
+function confetti(){
+
+const colors=["#ff2d75","#ff66a3","#ffd700","#00ccff","#ffffff"];
+
+for(let i=0;i<150;i++){
+
+let div=document.createElement("div");
+
+div.className="confetti";
+
+div.style.left=Math.random()*100+"vw";
+
+div.style.background=colors[Math.floor(Math.random()*colors.length)];
+
+div.style.width=(5+Math.random()*10)+"px";
+
+div.style.height=div.style.width;
+
+div.style.animationDuration=(2+Math.random()*4)+"s";
+
+document.body.appendChild(div);
+
+setTimeout(()=>{
+div.remove();
+},6000);
+
+}
+
+}
+
+function floatingHearts(){
+
+setInterval(function(){
+
+let heart=document.createElement("div");
+
+heart.className="floatHeart";
+
+heart.innerHTML="❤️";
+
+heart.style.left=Math.random()*100+"vw";
+
+heart.style.fontSize=(20+Math.random()*30)+"px";
+
+heart.style.animationDuration=(3+Math.random()*4)+"s";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>{
+heart.remove();
+},7000);
+
+},300);
+
+}
+
+loadQuestion();
+
+</script>
+
+</body>
+</html>
